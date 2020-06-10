@@ -224,6 +224,7 @@ td{
   justify-content: space-between;
   background-color: #4d7682;
   padding: 0.5vh 0;
+  display: none;
 }
 
 .class-name{
