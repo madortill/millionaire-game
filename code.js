@@ -30,6 +30,38 @@ const termList = [
         ans2: "תשובה 2",
         ans3: "תשובה 3",
         img: "#"
+    },
+    {
+        quess: "שאלה 5",
+        ans0: "תשובה נכונה",
+        ans1: "תשובה 1",
+        ans2: "תשובה 2",
+        ans3: "תשובה 3",
+        img: "#"
+    },
+    {
+        quess: "שאלה 6",
+        ans0: "תשובה נכונה",
+        ans1: "תשובה 1",
+        ans2: "תשובה 2",
+        ans3: "תשובה 3",
+        img: "#"
+    },
+    {
+        quess: "שאלה 7",
+        ans0: "תשובה נכונה",
+        ans1: "תשובה 1",
+        ans2: "תשובה 2",
+        ans3: "תשובה 3",
+        img: "#"
+    },
+    {
+        quess: "שאלה 8",
+        ans0: "תשובה נכונה",
+        ans1: "תשובה 1",
+        ans2: "תשובה 2",
+        ans3: "תשובה 3",
+        img: "#"
     }
     /* an example for question template 
     {
@@ -45,7 +77,7 @@ const termList = [
 ];
 
 //value of the questions
-const quesValue = ["0", "1,000", "100,000", "500,000", "1,000,000","1,000,000"];
+// const quesValue = ["0", "1,000", "100,000", "500,000", "1,000,000","1,000,000"];
 
 
 var quessOrder = [];
@@ -61,6 +93,11 @@ window.onload = () => {
 };
 
 function startGame() {
+    // for (let index = 0; index < termList.length; index++) {
+    //     const element = termList[index];
+    //     console.log(numCommas(questionValue(termList, index)));        
+    // }
+
     quessOrder = [];
     ansArr = [0, 1, 2, 3];
     currQues = 0;
@@ -94,8 +131,10 @@ function enterText() {
 
 
     //enter the value of the money and the
-    document.getElementById("quess-value").innerHTML = quesValue[currQues + 1];
-    document.getElementById("money-bank").innerHTML = quesValue[currQues];
+    // document.getElementById("quess-value").innerHTML = quesValue[currQues + 1];
+
+    document.getElementById("quess-value").innerHTML = numCommas(questionValue(termList, currQues));
+    document.getElementById("money-bank").innerHTML =  numCommas(currQues > 0 ? questionValue(termList, currQues - 1) : 0);
 
 
     //change the question text
@@ -111,7 +150,7 @@ function enterText() {
         allNotes[i].addEventListener("click", cheack);
     }
 
-    console.log("1");
+    // console.log("1");
     //enter the quess number
     document.getElementById("quess-count").innerHTML = `${currQues + 1}/${termList.length}`;
 }
@@ -122,7 +161,7 @@ function cheack(e) {
     currQues++;
 
     if (currQues == termList.length) {
-        console.log("finel choice");
+        // console.log("finel choice");
         if (e.currentTarget.textContent == termList[currQues - 1].ans0) {
 
             //change cards color- green color
@@ -149,9 +188,9 @@ function cheack(e) {
     }
     else {
 
-        console.log(" not finel choice");
-        console.log(e.currentTarget.textContent);
-        console.log(termList[currQues].ans0);
+        // console.log(" not finel choice");
+        // console.log(e.currentTarget.textContent);
+        // console.log(termList[currQues].ans0);
         //cheack if the text in the card that has click is the same as the correct answer
         if (e.currentTarget.textContent == termList[currQues - 1].ans0) {
 
@@ -336,3 +375,33 @@ function onClickPlay() {
     // document.querySelector(".info").classList.add("inactive");
 }
 
+
+// // round number to start with 5 2 or 1
+// function smoothStep(n){
+//     let base = Math.floor(Math.log10(n));
+//     let count = n / Math.pow(10, base);
+//     count = Math.floor(count / .5) * .5;
+//     return count * Math.pow(10, base);
+// }
+
+// adds commas to number
+function numCommas(n){
+    return n > 1 ? n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : n;
+}
+
+// return how much money a question worth
+// arr = array of questions  
+// n = number of question
+// maxScore = value for last question
+// after 40 something questions reapet values
+function questionValue(arr, n, maxScore = 1000000) {
+    n++;
+    let count = Math.floor((Math.log10(maxScore) - 1) * 9 + 2);
+    let stride = count / arr.length;
+    let fraq = stride - Math.floor(stride);
+    stride = stride - fraq;
+    // if(!stride)
+    //     throw new Error("Invalid stride, the {maxScore} and {arr.length} of the parameters given aren't valid together");
+    n = n * stride + Math.floor(Math.fround(fraq * n));
+    return ((n-1) % 9 + 1) * 5 * Math.pow(10,Math.floor((n - 1) / 9));
+}

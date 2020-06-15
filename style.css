@@ -172,6 +172,7 @@ td{
     /* margin-top: 2vh; */
     height: 8vh;
     width: max-content;
+    min-width: 3em;
     padding: 5vw;
     background-image: url(images/point.svg);
     background-size: 100% 100%;
@@ -227,9 +228,13 @@ td{
   display: none;
 }
 
+.info-place .space{
+  flex: 1 0 0;
+}
+
 .class-name{
   color: white;
-  width: 11.4em;
+  width: fit-content;
   text-align: right;
   margin-right: 8vw;
 }
@@ -257,8 +262,8 @@ body .inactive {
 
 #money-bank{
   color: white;
-  width: 17em;
-  text-align: end;
+  /* width: 17em; */
+  text-align: left;
 }
 
 .win-page{
